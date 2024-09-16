@@ -1,0 +1,19 @@
+/* Seeing how much usage is on a DB - focus on FilePercentUsed 1.00 > is fine | FilePercentFree Focus on this too Single database view */
+--Information about Files (mdf and ldf)
+USE tempdb
+GO
+
+select db_name() as 'Database'
+       ,df.name as 'FileName'
+          ,df.type_desc
+          ,ds.name as 'FileGroupName'
+          ,cast(df.size/128. as numeric(12,2)) as 'FileSize(MB)'
+          ,cast(FILEPROPERTY(df.name,'SpaceUsed')/128. as numeric(12,2))as 'FileSpaceused(MB)'
+          ,cast((FILEPROPERTY(df.name,'SpaceUsed')/128.) /  (df.size/128.) * 100 as numeric(12,2)) as 'FilePercentUsed'
+          ,cast(df.size/128. - (FILEPROPERTY(df.name,'SpaceUsed')/128.) as numeric(12,2)) as 'FileFreeSpace(MB)'
+          ,cast((df.size/128 - FILEPROPERTY(df.name,'SpaceUsed')/128)/(df.size/128.)*100 as numeric(12,2)) as 'FilePercentFree'
+		  ,cast(df.growth/128. as numeric(12,2)) as 'FileGrowth'
+          ,df.physical_name
+  from sys.database_files df
+  left join sys.data_spaces ds
+    on  ds.data_space_id = df.data_space_id
