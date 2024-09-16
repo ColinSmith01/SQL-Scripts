@@ -1,0 +1,23 @@
+# Email configuration
+$smtpServer = "internalsmtp.corp.test.com"
+$smtpPort = 1 #change for relevant port
+#$smtpSenderIP = "1.1.1.1"  # Server Sending Ip
+ 
+
+
+$ReportDate = Get-Date -format "MM-dd-yyyy"
+$senderEmail = "Business-Team@ryanair.com" # testing ignore
+$receiverEmail = "smithcol@gmail.com","test@gmail.com" #people to get email
+$subject = "SQL Audit Login Reports for: " + $ReportDate
+$body = "<br><br><strong> Please find the attached audit CSV file for SQL Server logins.<strong><br><br><p> Kind Regards, <be> Business Team. <br><p>"
+
+
+
+
+# Path to the CSV file
+$attachmentPath = "C:\temp\test\SQLAudit.csv"
+
+
+
+
+Send-MailMessage -From $senderEmail -To $receiverEmail -Subject $subject -Body $body -BodyAsHtml  -SmtpServer $smtpServer -Port $smtpPort -Attachments $attachmentPath
