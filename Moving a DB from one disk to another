@@ -1,0 +1,28 @@
+-- Moving a DB from one disk to another --
+
+-- get logic file name for futurue reference--
+USE Master;
+ 
+SELECT 
+name AS LogicalFileName
+FROM sys.master_files
+WHERE database_id = DB_ID ('Travel_OAT'); --put in relevant DB --
+
+
+-- put db offline to then go onto server and move DB to new path--
+ALTER DATABASE [Travel_OAT] SET OFFLINE WITH ROLLBACK IMMEDIATE;
+
+-- move DB from F to G drive on CHosqldt01 --
+-- updating DB with new file path--
+ALTER DATABASE  [Travel_OAT]
+MODIFY FILE (NAME = 'Travel', FILENAME = 'G:\Databases\Travel_OAT.mdf');
+GO
+
+-- put DB back online --
+ALTER DATABASE [Travel_OAT] SET ONLINE;
+
+
+-- see the name physical name and db status --
+SELECT name, physical_name, state_desc
+FROM sys.master_files
+WHERE database_id = DB_ID ('Travel_OAT');
