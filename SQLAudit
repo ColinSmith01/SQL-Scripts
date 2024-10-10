@@ -10,7 +10,7 @@ CREATE TABLE DBA.dbo.ConsolidatedAuditLogs (
 );
 GO
 
----This steps are collecting unique records with instance logins from last job execution
+---This steps are collecting unique records with instance logins from last job execution | repeat for however many dbs you want to query---
 -- declaring lastchecktime before main body of code --
 
 DECLARE @LastCheckTime DATETIME;
