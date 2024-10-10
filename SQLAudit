@@ -1,0 +1,98 @@
+DROP TABLE DBA.dbo.ConsolidatedAuditLogs
+GO
+CREATE TABLE DBA.dbo.ConsolidatedAuditLogs (
+	ServerName NVARCHAR(128),
+	LoginName NVARCHAR(128),
+	LoginDate NVARCHAR(128),
+	Succes1Failed0 NVARCHAR(128),
+	ClientNameOrIP NVARCHAR(128)
+
+);
+GO
+
+---This steps are collecting unique records with instance logins from last job execution
+-- declaring lastchecktime before main body of code --
+
+DECLARE @LastCheckTime DATETIME;
+SELECT @LastCheckTime = MAX(CheckTime) FROM DBA.dbo.AuditCheckLog;
+
+--main body of code --
+INSERT INTO DBA.dbo.ConsolidatedAuditLogs (ServerName, LoginName, LoginDate, Succes1Failed0, ClientNameOrIP)
+
+		SELECT DISTINCT server_instance_name, server_principal_name, MIN(event_time) AS LoginDate, succeeded, client_ip
+		FROM sys.fn_get_audit_file ('\\fileshare_server_storingdata\SQLDrop\Instance_Access_Audit\Database_server_userdetails\*.sqlaudit', DEFAULT, DEFAULT) -- put in relevant server for fileshare_server_storingdata | \Database_server_userdetails 
+		WHERE event_time >@LastCheckTime
+		GROUP BY server_instance_name, server_principal_name, succeeded, client_ip, succeeded, client_ip
+
+INSERT INTO DBA.dbo.ConsolidatedAuditLogs (ServerName, LoginName, LoginDate, Succes1Failed0, ClientNameOrIP)
+VALUES (NULL, NULL, NULL, NULL, NULL);
+
+GO
+
+DECLARE @LastCheckTime DATETIME;
+SELECT @LastCheckTime = MAX(CheckTime) FROM DBA.dbo.AuditCheckLog;
+
+INSERT INTO DBA.dbo.ConsolidatedAuditLogs (ServerName, LoginName, LoginDate, Succes1Failed0, ClientNameOrIP)
+
+		SELECT DISTINCT server_instance_name, server_principal_name, MIN(event_time) AS LoginDate, succeeded, client_ip
+		FROM sys.fn_get_audit_file ('\\chofs17\SQLDrop\Instance_Access_Audit\CHOYLDROC01\*.sqlaudit', DEFAULT, DEFAULT)
+		WHERE event_time >@LastCheckTime
+		GROUP BY server_instance_name, server_principal_name, succeeded, client_ip
+
+INSERT INTO DBA.dbo.ConsolidatedAuditLogs (ServerName, LoginName, LoginDate, Succes1Failed0, ClientNameOrIP)
+VALUES (NULL, NULL, NULL, NULL, NULL);
+
+GO
+
+INSERT INTO DBA.dbo.AuditCheckLog (CheckTime) VALUES (GETDATE());
+
+GO
+
+DECLARE @EmailRecipient NVARCHAR(255) = N'smithcol@test.com;colsmith@test.com;';		--Enter your recipients
+DECLARE @EmailSubject NVARCHAR(255) = N'SQL Instance login audit';	--Enter name of mail subject
+DECLARE @EmailBody NVARCHAR(MAX);
+DECLARE @ProfileName NVARCHAR(255)
+SELECT @ProfileName = p.name FROM msdb.dbo.sysmail_principalprofile AS pp JOIN msdb.dbo.sysmail_profile AS p ON pp.profile_id = p.profile_id
+WHERE pp.is_default = 1;
+
+SELECT @EmailBody
+		= N'<html>' 
+			+ N'<head>' 
+				+ N'<style>' 
+					+ N'table {border-collapse: collapse;}'
+					+ N'th, td {border: 1px solid black; padding: 5px;}' 
+				+ N'</style>' 
+			+ N'</head>' 
+			+ N'<body>'
+				+ N'<h2>SQL instance login audit</h2>' 
+				+ N'<table>' 
+					+ N'<tr>' 
+						+ N'<th>Servername</th>'
+						+ N'<th>LoginName</th>'
+						+ N'<th>LoginDate</th>' 
+						+ N'<th>Succes1Failed0</th>'
+						+ N'<th>ClientNameOrIP</th>'
+					+ N'</tr>';
+
+SELECT @EmailBody
+		= @EmailBody 
+				+ N'<tr>' 
+					+ N'<td>' + ISNULL(ServerName, '') + N'</td>'
+					+ N'<td>' + ISNULL(LoginName, '') + N'</td>' 
+					+ N'<td>' + ISNULL(LoginDate, '') + N'</td>' 
+					+ N'<td>' + ISNULL(Succes1Failed0, '') + N'</td>'
+					+ N'<td>' + ISNULL(ClientNameOrIP, '') + N'</td>'
+FROM DBA.dbo.ConsolidatedAuditLogs
+
+SET @EmailBody = @EmailBody + N'</table>' + N'</body>' + N'</html>';
+
+SELECT @EmailBody;
+
+---Executing stored procedure for email sending
+
+EXEC msdb.dbo.sp_send_dbmail
+    @profile_name = @ProfileName,		--'YourMailProfile', Replace with the name of your Database Mail profile
+    @recipients = @EmailRecipient,
+    @subject = @EmailSubject,
+    @body = @EmailBody,
+    @body_format = 'HTML';
