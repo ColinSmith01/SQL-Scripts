@@ -1,0 +1,8 @@
+--Setting up SQL Server Logs needed for email audits --
+--Security Audits - Audit_Instance_Access | On Audit Log Failure: Continue | Audit Destination: File | Path: \\fileserver\SQLDrop\Instance_Access_Audit\Database | Audit File Maximum Limit: Maximum Rollover Files : O 
+| Number of files: 30 | Number of files: 30 --
+
+-- Server Audit Specifications -- "Audit_Instance_Access_Specification" - 1. FAILED_LOGIN_GROuP 2. SUCCESSFUL_LOGIN_GROUP --
+--Name: Specification_DDL | Audit: Audit_DDL - 1. DATABASE_ROLE_MEMBER_CHANGE 2. SERVER_ROLE_MEMBER_CHANGE_GROUP 3. DATABASE_PERMISSION_CHANGE_GROUP 4. DATABASE_OBJECT_PERMISSION_CHANGE_GROUP 5. SERVER_OBJECT_PERMISSION_CHANGE_GROUP                       6. SERVER_PERMISSION_CHANGE_GROUP 7. DATABASE_CHANGE_GROUP 8. DATABASE_OBJECT_CHANGE_GROUP 9. DATABASE_PRINCIPAL_CHANGE_GROUP 10. SERVER_OBJECT_CHANGE_GROUP 11. SERVER_PRINCIPAL_CHANGE_GROUP 12. LOGIN_CHANGE_PASSWORD_GROUP                                 13. DATABASE_OWNERSHIP_CHANGE_GROUP 14. DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP 15. SERVER_OBJECT_OWNERSHIP_CHANGE_GROUP -- 
+
+

@@ -1,9 +1,0 @@
---Setting up SQL Server Logs needed for email audits --
--- Management - SQL Server Logs ¬ Right Click Configure - Tick Limit Number of error log files before they are recycled - Max Number of error log files 99 --
-
-USE [master]
-GO
-EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'ErrorLogSizeInKb', REG_DWORD, 0
-GO
-EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'NumErrorLogs', REG_DWORD, 99
-GO
