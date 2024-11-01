@@ -1,0 +1,15 @@
+-- checking database name - log size and log space used--
+dbcc sqlperf(logspace)
+
+
+--- find the biggest log size / log space used and see what recovery model they use for example 'flight_bookings'
+
+select name, recovery_model_desc from sys.databases where name = 'flight_bookings'
+
+--lets say the log file is a FULL recovery and is 123GBs we try shrink it to 80GBS
+
+USE Flight_bookings;
+GO
+-- Shrink File 1
+DBCC SHRINKFILE (FLight_Bookings_log, 80024);
+GO
