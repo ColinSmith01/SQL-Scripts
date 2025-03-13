@@ -7,3 +7,14 @@ LEFT JOIN sys.server_principals AS sp
     ON dp.sid = sp.sid  
 WHERE sp.sid IS NULL  
     AND dp.authentication_type_desc = 'INSTANCE';  
+
+
+If an orphan is present - check for logs to see if they are using anything:
+
+---Script for audit log reading
+select * from fn_get_audit_file ('E:\Audit_Files\*.sqlaudit', default, default)
+where session_server_principal_name = 'amosinv'
+ORDER BY event_time DESC
+go
+
+DROP user orphan_user
