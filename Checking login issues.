@@ -1,0 +1,3 @@
+https://learn.microsoft.com/en-us/sql/relational-databases/performance/view-the-sql-server-error-log-sql-server-management-studio?view=sql-server-ver16
+
+filter log entries where: contain 'colinuser'
