@@ -1,0 +1,3 @@
+SELECT * FROM msdb.dbo.sysjobhistory WHERE step_id > 0 AND job_id IN
+(SELECT job_id FROM msdb.dbo.sysjobs WHERE name = '_DBA_INDEX_OPTIMIZE')
+ORDER BY run_date DESC, sql_severity DESC;
