@@ -1,0 +1,9 @@
+$server = Connect-DbaInstance '
+    -SqlInstance 'Source_Server, 52900 '
+    -TrustServerCertificate;
+
+$server2 = Connect-DbaInstance '
+    -SqlInstance 'Destination_Server, 52900' 
+    -TrustServerCertificate;
+
+Copy-DbaDatabase -Source $server -Destination $server2 -Database Users_DB -BackupRestore -SharedPath \\Filershare.google.com
