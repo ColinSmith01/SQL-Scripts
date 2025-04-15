@@ -1,0 +1,11 @@
+-- Check Database backup history
+-- changing the dates range that you seek in, changing getdate () -1 for any value that you want to see, f.e getdate () - 100 will return last 100 backupts 
+-- After WHERE, you can add "AND" f.e. "AND database_name = 'database name'" to see results only for particular database
+-- checking particular type of backup, replacing D (full backup) with L (log backup) or I (differential backup)
+
+USE msdb
+GO
+SELECT  database_name as DB_Name, type as Type, CAST(round(backup_size/1024/1024,1) AS NUMERIC(10,2)) as BackupSize_MB, CAST(round(compressed_backup_size/1024/1024,1) AS NUMERIC(10,2)) as CompressedBackupSize_MB, backup_start_date as Backup_start, backup_finish_date as Backup_Finish, user_name as Who_Performed, server_name as Server_Name, machine_name as Machine_Name, physical_device_name as Direction, is_copy_only as Is_Copy_only
+FROM backupset BS join backupmediafamily BMF on BS.media_set_id=BMF.media_set_id
+WHERE backup_finish_date > getdate()-1 and type = 'D'
+ORDER BY backup_start_date DESC
