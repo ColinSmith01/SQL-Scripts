@@ -1,0 +1,41 @@
+-- Updating Your MDF - data location
+
+EXEC xp_instance_regwrite 
+
+    N'HKEY_LOCAL_MACHINE',
+
+    N'SOFTWARE\Microsoft\MSSQLServer\MSSQLServer',
+
+    N'DefaultData',
+
+    REG_SZ,
+
+    N'E:\MSSQL\Data\';  -- <-- Path where you want your data stored.
+ 
+-- Updating your Logs (LDF)
+
+EXEC xp_instance_regwrite 
+
+    N'HKEY_LOCAL_MACHINE',
+
+    N'SOFTWARE\Microsoft\MSSQLServer\MSSQLServer',
+
+    N'DefaultLog',
+
+    REG_SZ,
+
+    N'E:\MSSQL\Logs\';  -- <-- Path where you want your logs stored.
+
+-- Updating your Backup location (BCK)
+
+EXEC xp_instance_regwrite 
+
+    N'HKEY_LOCAL_MACHINE',
+
+    N'SOFTWARE\Microsoft\MSSQLServer\MSSQLServer',
+
+    N'BackupDirectory',
+
+    REG_SZ,
+
+    N'F:\Backup\MSSQL';  -- <-- Path where you want your backups stored.
