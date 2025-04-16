@@ -1,0 +1,5 @@
+EXEC sp_attach_db @dbname = N'databasename',
+	@filename1 = N'E:\NewFOlder\datbaseDATA1.mdf',
+	@filename2 = N'E:\NewFolder\databaseDATA2.NDF',
+	@filename3 = N'E:\NewFolder\databaseDATA3.NDF',
+	@filename4 = N'G:\NewFolder\databaseLOG1.ldf';
