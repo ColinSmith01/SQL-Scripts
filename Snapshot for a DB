@@ -1,0 +1,27 @@
+-- 1) take snapshot
+
+CREATE DATABASE ss_databasename_ss
+ON
+(NAME = [database],
+FILENAME ='U:\Data\database.SS1'),
+(NAME = [databaseTest2],
+FILENAME ='U:\Data\database.SS2'),
+(NAME = [databaseTest3],
+FILENAME ='U:\Data\database.SS3')
+ 
+AS SNAPSHOT OF [database];
+GO
+
+-- 2) Execute the change requested 
+-- 3) Ask Dev to check if all changes are okay if so you can do step 4
+
+-- 4.1) Once all is okay you can drop the Snapshot 
+
+DROP DATABASE ss_database_ss
+
+
+-- 4.2) if changes need to be rolled back you run the rollback
+
+---restoring database using snapshot----
+RESTORE DATABASE Databasename FROM DATABASE_SNAPSHOT = 'ss_Databasename_ss'
+
