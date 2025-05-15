@@ -1,0 +1,18 @@
+USE Database_name;
+GO
+
+SELECT 
+    dp.name AS PrincipalName,
+    dp.type_desc AS PrincipalType,
+    o.name AS ObjectName,
+    o.type_desc AS ObjectType,
+    p.permission_name,
+    p.state_desc AS PermissionState
+FROM 
+    sys.database_permissions p
+LEFT JOIN 
+    sys.objects o ON p.major_id = o.object_id
+JOIN 
+    sys.database_principals dp ON p.grantee_principal_id = dp.principal_id
+WHERE 
+    dp.name = 'sysadmin';
