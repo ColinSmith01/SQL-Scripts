@@ -1,0 +1,5 @@
+-- move db_owner schema to dbo user
+USE [database_name]
+GO
+ALTER AUTHORIZATION ON SCHEMA::[db_owner] TO [dbo]
+GO
