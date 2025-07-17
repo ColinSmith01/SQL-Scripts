@@ -1,0 +1,62 @@
+
+##Create DB login
+https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-login?view=sql-server-ver16
+
+##Baisc T-SQL Commands
+https://www.mssqltips.com/sqlservertip/7432/sql-cheat-sheet-sql-server-tsql-commands/
+https://www.mssqltips.com/sqlservertip/7616/sql-cheat-sheet-for-sql-server-dba-daily-operations/
+
+##MS Update Catalog
+https://catalog.update.microsoft.com/Home.aspx
+
+##MS SQL Versions Lists
+https://sqlserverbuilds.blogspot.com/
+
+##DBATOOLS Powershell 
+https://docs.dbatools.io/Copy-DbaLogin
+https://dbatools.io/commands/
+
+##Restore DB from one server to another
+https://stackoverflow.com/questions/6267273/how-to-restore-to-a-different-database-in-sql-server
+
+##SQL Server Setup Guide
+https://red9.com/blog/best-practices-for-sql-server-installation/#:~:text=%5BBest%20Practices%5D%20SQL%20Server%20Installation%201%20Preparation%20If,best%20practices%20after%20the%20SQL%20Server%20installation.%20
+
+##SQL Server Setup Checklist
+https://red9.com/blog/sql-server-installation-checklist/
+
+##Building failover cluster
+https://www.mssqltips.com/sqlservertip/6539/stepbystep-installation-of-sql-server-2019-on-a-windows-server-2019-failover-cluster-part-1/
+
+##Schedule DB Backup using SSMS
+https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/schedule-database-backup-operation-ssms?view=sql-server-ver16#use-the-script-action-to-job-option-to-back-up-databases
+
+##T-SQL Job Step
+https://learn.microsoft.com/en-us/ssms/agent/create-a-transact-sql-job-step?view=sql-server-ver16
+
+##Reading into R/R R/W Latency 
+https://sqlperformance.com/2015/03/io-subsystem/monitoring-read-write-latency
+
+##SSMS guide List 
+https://www.mssqltips.com/category/sql-server-management-studio/
+
+##Types of Deadlocks
+https://learn.microsoft.com/en-us/sql/relational-databases/event-classes/lock-deadlock-event-class?view=sql-server-ver16
+
+##HTML Editior can be used for email config on SQL Report
+https://html5-editor.net/
+
+##SSRS Encryption Key
+https://www.mssqltips.com/sqlservertip/3312/sql-server-reporting-services-ssrs-encryption-key/
+
+##Optimize SQL server indexes 
+https://solutioncenter.apexsql.com/how-to-create-and-optimize-sql-server-indexes-for-better-performance/
+
+##Display Execution Plan
+https://learn.microsoft.com/en-us/sql/relational-databases/performance/display-an-actual-execution-plan?view=sql-server-ver16
+
+##SQL Server Tech References
+https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16
+
+##Whats SQL server?
+https://learn.microsoft.com/en-us/sql/sql-server/what-is-sql-server?view=sql-server-ver16
