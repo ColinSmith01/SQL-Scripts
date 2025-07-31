@@ -1,0 +1,9 @@
+-- check server instance name--
+SELECT @@SERVERNAME AS InstanceName;
+
+-- drop current instance name --
+sp_dropserver 'currentinstance';
+
+-- new instance name --
+sp_addserver 'Newinstance', 'local';
+
