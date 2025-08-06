@@ -1,0 +1,6 @@
+USE msdb
+GO
+SELECT  database_name as DB_Name, type as Type, CAST(round(backup_size/1024/1024,1) AS NUMERIC(10,2)) as BackupSize_MB, CAST(round(compressed_backup_size/1024/1024,1) AS NUMERIC(10,2)) as CompressedBackupSize_MB, backup_start_date as Backup_start, backup_finish_date as Backup_Finish, user_name as Who_Performed, server_name as Server_Name, machine_name as Machine_Name, physical_device_name as Direction, is_copy_only as Is_Copy_only
+FROM backupset BS join backupmediafamily BMF on BS.media_set_id=BMF.media_set_id
+WHERE backup_finish_date > getdate()-1 and type = 'D' -- L log or D database
+ORDER BY backup_start_date DESC
