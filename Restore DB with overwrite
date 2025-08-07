@@ -1,0 +1,6 @@
+USE [master] -- RESTORE DATABASE [Current DB to overwrrite] from where you have .bak file
+RESTORE DATABASE [TestDB]  FROM  DISK = N'F:\MSSQL15.MSSQLSERVER\MSSQL\Backup\ProductionDatabase.bak' WITH  FILE = 1,  
+MOVE N'ProductionDB' TO N'G:\Databases\TestDB.mdf',  
+MOVE N'ProductionDB_log' TO N'L:\Logs\TestDB_log.ldf',  NORECOVERY,  NOUNLOAD,  REPLACE,  STATS = 5
+ -- N'Bck File mdf to current DB Mdf and Bck file log to current ldf
+GO
