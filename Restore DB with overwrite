@@ -4,3 +4,7 @@ MOVE N'ProductionDB' TO N'G:\Databases\TestDB.mdf',
 MOVE N'ProductionDB_log' TO N'L:\Logs\TestDB_log.ldf',  NORECOVERY,  NOUNLOAD,  REPLACE,  STATS = 5
  -- N'Bck File mdf to current DB Mdf and Bck file log to current ldf
 GO
+
+
+-- Once this is done 
+RESTORE DATABASE [TestDB] WITH RECOVERY;
