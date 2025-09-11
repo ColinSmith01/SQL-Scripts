@@ -1,0 +1,21 @@
+-- Checking Script Index % on DB 
+SAMPLED mode: taking only 1% of total table pages used, faster and less resource consuming
+DETAILED mode: doesn't give a fuck, full power for reading every table from record 0 to the end
+LIMITED mode: just estimated values, but quite quick
+--
+
+
+SELECT 
+    DB_NAME(database_id) AS DBName,
+    OBJECT_NAME(ps.object_id) AS TableName,
+    i.name AS IndexName,
+    ps.index_id,
+    ps.avg_fragmentation_in_percent,
+    ps.page_count
+FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, 'SAMPLED') ps ---Change Sampled if need be --
+JOIN sys.indexes i 
+    ON ps.object_id = i.object_id 
+   AND ps.index_id = i.index_id
+WHERE ps.database_id = DB_ID()
+  AND ps.index_id > 0
+ORDER BY ps.avg_fragmentation_in_percent DESC;
